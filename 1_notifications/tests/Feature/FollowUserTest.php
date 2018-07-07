@@ -26,4 +26,28 @@ class FollowUserTest extends TestCase
             'follow_id' => $userToFollow->id,
         ]);
     }
+
+    /** @test */
+    public function after_follow_a_user_a_new_record_should_be_created_in_the_followers_table()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $user = factory(User::class)->create();
+
+        $this->follow($user);
+        
+        $this->assertDatabaseHas('followers', [
+            'user_id'     => $user->id,
+            'follower_id' => auth()->id(),
+        ]);
+
+        $this->assertCount(1, $user->followers);
+    }
+
+    public function follow($user)
+    {
+        $this->post("/users/{$user->id}/follow");
+
+        return $user;
+    }
 }
