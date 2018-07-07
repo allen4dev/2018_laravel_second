@@ -19,8 +19,35 @@ class NotificationsTest extends TestCase
 
         $userFollowed = factory(User::class)->create();
 
-        $this->post("/users/{$userFollowed->id}/follow");
+        $this->follow($userFollowed);
         
         $this->assertCount(1, $userFollowed->fresh()->unreadNotifications);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_mark_a_notification_as_readed()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $followedUser = factory(User::class)->create();
+
+        $this->follow($followedUser);
+        
+        $this->actingAs($followedUser);
+
+        tap(auth()->user(), function ($user) {
+            $this->delete(
+                "/users/{$user->id}/notifications/{$user->fresh()->unreadNotifications->first()->id}"
+            );
+    
+            $this->assertCount(0, $user->unreadNotifications);
+        });
+    }
+
+    public function follow($user)
+    {
+        $this->post("/users/{$user->id}/follow");
+
+        return $user;
     }
 }
