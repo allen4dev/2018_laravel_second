@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Events\UserWasFollowed;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -39,13 +41,7 @@ class User extends Authenticatable
 
     public function follow()
     {
-        auth()->user()->following()->create([
-            'follow_id' => $this->id,
-        ]);
-
-        $this->followers()->create([
-            'follower_id' => auth()->id(),
-        ]);
+        event(new UserWasFollowed($this));
 
         return $this;
     }
