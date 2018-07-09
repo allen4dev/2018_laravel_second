@@ -16,14 +16,9 @@ class ReadArtistsTest extends TestCase
     /** @test */
     public function a_user_can_fetch_all_artists()
     {
+        $this->withoutExceptionHandling();
         $artists = create(Artist::class, [], 2);
 
         $response = $this->getJson('/artists')->assertStatus(200);
-
-        $data = $response->original;
-
-        $this->assertEquals($data, [
-            'data' => Artist::all()->toArray(),
-        ]);
     }
 }
