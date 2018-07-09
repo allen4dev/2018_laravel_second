@@ -10,4 +10,9 @@ class Song extends Model
     {
         return '/songs/' . $this->id;
     }
+
+    public function artist()
+    {
+        return $this->belongsTo(Artist::class);
+    }
 }
