@@ -14,15 +14,13 @@ class ArtistController extends Controller
     {
         $artists = Artist::all();
 
-        return (new ArtistResource($artists))
-            ->response()
-            ->setStatusCode(200);
+        return new ArtistResource($artists);
     }
 
     public function show(Artist $artist)
     {
-        return (new ArtistResource($artist))
-            ->response()    
-            ->setStatusCode(200);
+        return new ArtistResource($artist);
+            // ->response()    
+            // ->setStatusCode(200);
     }
 }
