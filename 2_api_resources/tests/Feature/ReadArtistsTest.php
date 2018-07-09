@@ -24,4 +24,16 @@ class ReadArtistsTest extends TestCase
             ])
             ->assertStatus(200);
     }
+
+    /** @test */
+    public function a_user_can_fetch_a_single_artist()
+    {
+        $artist = create(Artist::class);
+
+        $this->get($artist->path())
+            ->assertJson([
+                'data' => $artist->toArray(),
+            ])
+            ->assertStatus(200);
+    }
 }
