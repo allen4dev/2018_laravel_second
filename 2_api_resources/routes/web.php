@@ -1,5 +1,9 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/artists', function () {
+    $artists = App\Artist::all()->toArray();
+
+    return [
+        'data' => $artists
+    ];
 });
