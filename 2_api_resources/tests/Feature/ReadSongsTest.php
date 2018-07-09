@@ -21,4 +21,14 @@ class ReadSongsTest extends TestCase
             ->assertJson([ 'data' => $songs->toArray() ])
             ->assertStatus(200);
     }
+
+    /** @test */
+    public function a_user_can_fetch_a_single_song()
+    {
+        $song = create(Song::class);
+
+        $this->get($song->path())
+            ->assertJson([ 'data' => $song->toArray() ])
+            ->assertStatus(200);
+    }
 }
