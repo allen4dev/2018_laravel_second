@@ -13,7 +13,7 @@ class ArtistTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function an_artist_knows_his_path()
+    public function it_knows_his_path()
     {
         $artist = create(Artist::class);
 

@@ -37,8 +37,12 @@ class User extends Authenticatable
 
     public function upgrade()
     {
+        request()->validate([
+            'firstname' => 'required',
+        ]);
+
         $artist = $this->artist()->create([
-            'firstname' => 'My artist name',
+            'firstname' => request('firstname'),
             'user_id'   => auth()->id(),
         ]);
 
