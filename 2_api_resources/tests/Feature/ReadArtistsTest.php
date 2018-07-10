@@ -31,5 +31,5 @@ class ReadArtistsTest extends TestCase
         $this->get($artist->path())
             ->assertJson([ 'data' => $artist->toArray() ])
             ->assertStatus(200);
-    }
+    }    
 }

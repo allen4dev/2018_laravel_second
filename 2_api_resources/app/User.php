@@ -14,9 +14,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -26,4 +24,26 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function path()
+    {
+        return '/users/' . $this->id;
+    }
+
+    public function artist()
+    {
+        return $this->belongsTo(Artist::class);
+    }
+
+    public function upgrade()
+    {
+        $artist = $this->artist()->create([
+            'firstname' => 'My artist name',
+            'user_id'   => auth()->id(),
+        ]);
+
+        $this->update([ 'artist_id' => $artist->user_id]);
+
+        return $artist;
+    }
 }
