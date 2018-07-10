@@ -20,7 +20,9 @@ class UpgradeUserTest extends TestCase
         tap(auth()->user(), function ($user) {
             $this->assertNull($user->artist);
             
-            $this->post($user->path() . '/upgrade')
+            $artistInfo = raw(Artist::class, [ 'user_id' => $user->id ]);
+
+            $this->post($user->path() . '/upgrade', $artistInfo)
                 ->assertJson([ 'data' => Artist::first()->toArray() ])
                 ->assertStatus(202);
             

@@ -18,8 +18,8 @@ class CreateArtistsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('nickname');
-            $table->string('photo_url');
+            $table->string('nickname')->nullable();
+            $table->string('photo_url')->nullable();
             $table->integer('age');
             $table->text('description');
             $table->timestamps();

@@ -17,7 +17,7 @@ class ReadSongsTest extends TestCase
     {
         $songs = create(Song::class, [], 2);
         
-        $this->get('/songs')
+        $this->get('/api/songs')
             ->assertJson([ 'data' => $songs->toArray() ])
             ->assertStatus(200);
     }

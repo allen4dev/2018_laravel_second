@@ -19,7 +19,7 @@ class ArtistTest extends TestCase
 
         $this->assertEquals(
             $artist->path(),
-            "/artists/{$artist->id}"
+            "/api/artists/{$artist->id}"
         );
     }
 }

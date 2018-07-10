@@ -10,6 +10,6 @@ class Artist extends Model
 
     public function path()
     {
-        return '/artists/' . $this->id;
+        return '/api/artists/' . $this->id;
     }
 }

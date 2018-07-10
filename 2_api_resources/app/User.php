@@ -27,7 +27,7 @@ class User extends Authenticatable
 
     public function path()
     {
-        return '/users/' . $this->id;
+        return '/api/users/' . $this->id;
     }
 
     public function artist()
@@ -38,12 +38,18 @@ class User extends Authenticatable
     public function upgrade()
     {
         request()->validate([
-            'firstname' => 'required',
+            'firstname'   => 'required',
+            'lastname'    => 'required',
+            'age'         => 'required',
+            'description' => 'required',
         ]);
 
         $artist = $this->artist()->create([
-            'firstname' => request('firstname'),
-            'user_id'   => auth()->id(),
+            'firstname'   => request('firstname'),
+            'lastname'    => request('lastname'),
+            'age'         => request('age'),
+            'description' => request('description'),
+            'user_id'     => auth()->id(),
         ]);
 
         $this->update([ 'artist_id' => $artist->user_id]);

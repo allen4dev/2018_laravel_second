@@ -15,14 +15,12 @@ class CreateArtistsTest extends TestCase
     {
         $this->signin();
 
-        $this->upgradeUser(auth()->user(), [
-            'firstname' => null,
-        ])
-        ->assertStatus(403);
+        $this->upgradeUser(auth()->user(), [ 'firstname' => null ])
+        ->assertStatus(302);
     }
 
     public function upgradeUser($user, $data)
     {
-        return $this->post("/users/{$user->id}/upgrade", $data);
+        return $this->post("/api/users/{$user->id}/upgrade", $data);
     }
 }

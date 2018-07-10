@@ -18,7 +18,7 @@ class ReadArtistsTest extends TestCase
     {
         $artists = create(Artist::class, [], 2);
 
-        $this->getJson('/artists')
+        $this->getJson('/api/artists')
             ->assertJson([ 'data' => Artist::all()->toArray() ])
             ->assertStatus(200);
     }

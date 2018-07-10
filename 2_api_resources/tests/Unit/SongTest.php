@@ -18,7 +18,7 @@ class SongTest extends TestCase
     {
         $song = create(Song::class);
 
-        $this->assertEquals($song->path(), "/songs/{$song->id}");
+        $this->assertEquals($song->path(), "/api/songs/{$song->id}");
     }
 
     /** @test */

@@ -8,7 +8,7 @@ class Song extends Model
 {
     public function path()
     {
-        return '/songs/' . $this->id;
+        return '/api/songs/' . $this->id;
     }
 
     public function artist()
