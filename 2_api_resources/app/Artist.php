@@ -8,6 +8,11 @@ class Artist extends Model
 {
     protected $guarded = [];
 
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
     public function path()
     {
         return '/api/artists/' . $this->id;

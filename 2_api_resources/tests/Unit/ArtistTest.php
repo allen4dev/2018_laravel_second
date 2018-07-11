@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Artist;
+use App\User;
 
 class ArtistTest extends TestCase
 {

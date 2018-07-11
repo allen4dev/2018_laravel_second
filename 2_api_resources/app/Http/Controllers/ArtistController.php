@@ -45,6 +45,8 @@ class ArtistController extends Controller
     {
         $artist->delete();
 
+        auth()->user()->update([ 'artist_id' => null ]);
+
         return new ArtistResource($artist);
     }
 }
