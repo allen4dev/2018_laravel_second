@@ -21,6 +21,6 @@ class CreateArtistsTest extends TestCase
 
     public function upgradeUser($user, $data)
     {
-        return $this->post("/api/users/{$user->id}/upgrade", $data);
+        return $this->post($user->path() . '/upgrade', $data);
     }
 }

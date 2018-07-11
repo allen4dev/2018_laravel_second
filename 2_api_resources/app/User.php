@@ -55,7 +55,7 @@ class User extends Authenticatable
             'user_id'     => auth()->id(),
         ]);
 
-        $this->update([ 'artist_id' => $artist->user_id]);
+        $this->update([ 'artist_id' => $artist->id]);
 
         return $artist;
     }

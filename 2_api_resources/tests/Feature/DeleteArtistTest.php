@@ -28,6 +28,11 @@ class DeleteArtistTest extends TestCase
         ]);
     }
 
+    /**
+     * ToDo: after_a_user_deletes_his_artist_profile_his_artist_relationship_should_be_clean
+     * ToDo: just_authorized_users_can_delete_his_artist_profile
+     */
+
     public function deleteArtistProfile($artist)
     {
         return $this->delete($artist->path());
