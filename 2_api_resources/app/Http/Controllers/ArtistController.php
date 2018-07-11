@@ -24,9 +24,15 @@ class ArtistController extends Controller
 
     public function update(Artist $artist, Request $request)
     {
+        if (! auth()->user()->can('update', $artist)) {
+            return response()->json([
+                'error' => 'You are not allowed to modify this artist.'
+            ], 403);
+        }
+
         /**
          * ToDo: validate the request
-         */        
+         */
         
         $artist->updateInformation($request);
 

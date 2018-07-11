@@ -25,7 +25,8 @@ class UpdateArtistTest extends TestCase
         
         $this->assertDatabaseHas('artists', [
             'nickname' => $artist->nickname,
-            'age' => $artist->age,
+            'age'      => $artist->age,
+            'user_id'  => auth()->id(),
         ]);
 
         $newInfo = [
@@ -33,7 +34,7 @@ class UpdateArtistTest extends TestCase
             'age'      => 24,
         ];
 
-        $this->patch($artist->path(), $newInfo)
+        $this->updateArtistProfile($artist, $newInfo)
             ->assertJson([ 'data' => $artist->fresh()->toArray() ])
             ->assertStatus(202);
 
@@ -42,5 +43,24 @@ class UpdateArtistTest extends TestCase
             'age'      => $newInfo['age'],
             'user_id'  => auth()->id(),
         ]);
+    }
+
+    /** @test */
+    public function just_authorized_users_can_modifie_his_artist_profile()
+    {
+        $this->signin();
+
+        $artist = create(Artist::class);
+
+        $this->updateArtistProfile($artist, [])
+            ->assertJson([
+                'error' => 'You are not allowed to modify this artist.',
+            ])
+            ->assertStatus(403);
+    }
+
+    public function updateArtistProfile($artist, $data)
+    {
+        return $this->patch($artist->path(), $data);
     }
 }
