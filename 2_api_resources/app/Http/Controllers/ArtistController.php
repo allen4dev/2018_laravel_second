@@ -40,4 +40,11 @@ class ArtistController extends Controller
                     ->response()
                     ->setStatusCode(202);
     }
+
+    public function destroy(Artist $artist)
+    {
+        $artist->delete();
+
+        return new ArtistResource($artist);
+    }
 }
