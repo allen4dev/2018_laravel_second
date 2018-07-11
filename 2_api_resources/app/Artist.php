@@ -12,4 +12,18 @@ class Artist extends Model
     {
         return '/api/artists/' . $this->id;
     }
+
+    public function updateInformation($request)
+    {
+        $this->update($request->only([
+            'firstname',
+            'lastname',
+            'nickname',
+            'photo_url',
+            'age',
+            'description',
+        ]));
+
+        return $this;
+    }
 }

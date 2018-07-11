@@ -37,6 +37,9 @@ class User extends Authenticatable
 
     public function upgrade()
     {
+        /**
+         * ToDo: Refactor to FormRequest
+         */
         request()->validate([
             'firstname'   => 'required',
             'lastname'    => 'required',

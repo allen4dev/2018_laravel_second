@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 Route::get('/artists', 'ArtistController@index');
 Route::get('/artists/{artist}', 'ArtistController@show');
+Route::patch('/artists/{artist}', 'ArtistController@update');
 
 Route::get('/songs', 'SongController@index');
 Route::get('/songs/{song}', 'SongController@show');

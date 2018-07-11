@@ -20,7 +20,18 @@ class ArtistController extends Controller
     public function show(Artist $artist)
     {
         return new ArtistResource($artist);
-            // ->response()    
-            // ->setStatusCode(200);
+    }
+
+    public function update(Artist $artist, Request $request)
+    {
+        /**
+         * ToDo: validate the request
+         */        
+        
+        $artist->updateInformation($request);
+
+        return (new ArtistResource($artist))
+                    ->response()
+                    ->setStatusCode(202);
     }
 }

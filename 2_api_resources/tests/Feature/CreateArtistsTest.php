@@ -16,7 +16,7 @@ class CreateArtistsTest extends TestCase
         $this->signin();
 
         $this->upgradeUser(auth()->user(), [ 'firstname' => null ])
-        ->assertStatus(302);
+            ->assertStatus(302);
     }
 
     public function upgradeUser($user, $data)
