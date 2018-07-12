@@ -54,6 +54,6 @@ class ArtistPolicy
      */
     public function delete(User $user, Artist $artist)
     {
-        //
+        return $user->id === $artist->user_id;
     }
 }

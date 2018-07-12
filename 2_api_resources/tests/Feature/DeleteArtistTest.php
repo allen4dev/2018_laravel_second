@@ -29,10 +29,6 @@ class DeleteArtistTest extends TestCase
         ]);
     }
 
-    /**
-     * ToDo: just_authorized_users_can_delete_his_artist_profile
-     */
-
     /** @test */
     public function after_a_user_deletes_his_artist_profile_his_artist_relationship_should_be_clean()
     {
@@ -47,6 +43,20 @@ class DeleteArtistTest extends TestCase
 
             $this->assertNull($user->fresh()->artist_id);
         });
+    }
+
+    /** @test */
+    public function just_authorized_users_can_delete_his_artist_profile()
+    {
+        $this->signin();
+
+        $artist = create(Artist::class);
+
+        $this->deleteArtistProfile($artist)
+            ->assertJson([
+                'error' => 'You are not authorized to perform this action'
+            ])
+            ->assertStatus(403);
     }
 
     public function deleteArtistProfile($artist)

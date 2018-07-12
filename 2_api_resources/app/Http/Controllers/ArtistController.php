@@ -43,6 +43,12 @@ class ArtistController extends Controller
 
     public function destroy(Artist $artist)
     {
+        if (! auth()->user()->can('delete', $artist)) {
+            return response()->json([
+                'error' => 'You are not authorized to perform this action'
+            ], 403);
+        }
+
         $artist->delete();
 
         auth()->user()->update([ 'artist_id' => null ]);
