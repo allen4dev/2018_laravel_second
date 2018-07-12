@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Song extends Model
 {
+    protected $guarded = [];
+    
     public function path()
     {
         return '/api/songs/' . $this->id;

@@ -19,4 +19,18 @@ class SongController extends Controller
     {
         return new SongResource($song);
     }
+
+    public function store()
+    {
+        /**
+         * ToDo: validate request
+         */
+        $song = Song::create(
+            request()->only([ 'artist_id', 'genre_id', 'name' ])
+        );
+
+        return (new SongResource($song))
+                    ->response()
+                    ->setStatusCode(201);
+    }
 }
