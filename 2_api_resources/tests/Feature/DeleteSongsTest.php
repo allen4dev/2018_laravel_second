@@ -31,4 +31,20 @@ class DeleteSongsTest extends TestCase
             'genre_id'  => $song->genre_id,
         ]);
     }
+
+    /** @test */
+    public function just_authorized_artists_can_delete_a_song()
+    {
+        $this->signin();
+
+        $artist = create(Artist::class, [ 'user_id' => auth()->id() ]);
+
+        $song = create(Song::class);
+
+        $this->delete($song->path())
+            ->assertJson([
+                'error' => 'You are not allowed to perform this action'
+            ])
+            ->assertStatus(403);
+    }
 }

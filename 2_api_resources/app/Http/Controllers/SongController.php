@@ -55,6 +55,11 @@ class SongController extends Controller
 
     public function destroy(Song $song)
     {
+        if (! auth()->user()->can('delete', $song)) {
+            return response()->json([
+                'error' => 'You are not allowed to perform this action'
+            ], 403);
+        }
         $song->delete();
 
         return new SongResource($song);
