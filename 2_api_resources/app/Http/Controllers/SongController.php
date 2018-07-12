@@ -33,4 +33,13 @@ class SongController extends Controller
                     ->response()
                     ->setStatusCode(201);
     }
+
+    public function update(Song $song)
+    {
+        $song->update( request()->only([ 'genre_id', 'name' ]) );
+
+        return (new SongResource($song->fresh()))
+                    ->response()
+                    ->setStatusCode(202);
+    }
 }
