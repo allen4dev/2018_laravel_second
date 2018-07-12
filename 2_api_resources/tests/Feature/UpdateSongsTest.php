@@ -16,7 +16,9 @@ class UpdateSongsTest extends TestCase
     /** @test */
     public function an_artist_can_update_a_song()
     {
-        $artist = create(Artist::class);
+        $this->signin();
+
+        $artist = create(Artist::class, [ 'user_id' => auth()->id() ]);
 
         $song   = create(Song::class, [ 'artist_id' => $artist->id ]);
 
@@ -34,5 +36,21 @@ class UpdateSongsTest extends TestCase
             'genre_id'  => $updatedFields['genre_id'],
             'name'      => $updatedFields['name'],
         ]);
+    }
+
+    /** @test */
+    public function just_a_song_owner_can_update_a_song()
+    {
+        $this->signin();
+
+        $artist = create(Artist::class, [ 'user_id' => auth()->id() ]);
+
+        $song = create(Song::class);
+
+        $this->patch($song->path(), [ 'name' => 'new name' ])
+            ->assertJson([
+                'error' => 'You are not allowed to perform this action'
+            ])
+            ->assertStatus(403);
     }
 }

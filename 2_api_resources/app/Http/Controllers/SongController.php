@@ -36,6 +36,16 @@ class SongController extends Controller
 
     public function update(Song $song)
     {
+        /**
+         * ToDo: Handle the error in the render
+         */
+
+        if (! auth()->user()->can('update', $song)) {
+            return response()->json([
+                'error' => 'You are not allowed to perform this action'
+            ], 403);
+        }
+
         $song->update( request()->only([ 'genre_id', 'name' ]) );
 
         return (new SongResource($song->fresh()))

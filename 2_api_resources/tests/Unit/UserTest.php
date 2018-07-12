@@ -22,9 +22,10 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function a_user_belongs_to_one_artist()
+    public function a_user_has_one_artist()
     {
-        $user = factory(User::class)->states('isArtist')->create();
+        $user   = create(User::class);
+        $artist = create(Artist::class, [ 'user_id' => $user->id ]);
 
         $this->assertInstanceOf(Artist::class, $user->fresh()->artist);
     }

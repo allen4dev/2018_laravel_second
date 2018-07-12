@@ -24,6 +24,9 @@ class ArtistController extends Controller
 
     public function update(Artist $artist, Request $request)
     {
+        /**
+         * ToDo: Handle the error in the render
+         */
         if (! auth()->user()->can('update', $artist)) {
             return response()->json([
                 'error' => 'You are not allowed to modify this artist.'
@@ -43,6 +46,9 @@ class ArtistController extends Controller
 
     public function destroy(Artist $artist)
     {
+        /**
+         * ToDo: Handle the error in the render
+         */
         if (! auth()->user()->can('delete', $artist)) {
             return response()->json([
                 'error' => 'You are not authorized to perform this action'

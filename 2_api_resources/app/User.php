@@ -32,7 +32,8 @@ class User extends Authenticatable
 
     public function artist()
     {
-        return $this->belongsTo(Artist::class);
+        return $this->hasOne(Artist::class);
+        // return $this->belongsTo(Artist::class);
     }
 
     public function upgrade()
