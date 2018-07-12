@@ -52,4 +52,11 @@ class SongController extends Controller
                     ->response()
                     ->setStatusCode(202);
     }
+
+    public function destroy(Song $song)
+    {
+        $song->delete();
+
+        return new SongResource($song);
+    }
 }
