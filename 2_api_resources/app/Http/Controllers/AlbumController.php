@@ -46,4 +46,11 @@ class AlbumController extends Controller
                     ->response()
                     ->setStatusCode(202);
     }
+
+    public function destroy(Album $album)
+    {
+        $album->delete();
+
+        return new AlbumResource($album);
+    }
 }
