@@ -17,6 +17,11 @@ class AlbumController extends Controller
         return new AlbumResource($albums);
     }
 
+    public function show(Album $album)
+    {
+        return new AlbumResource($album);
+    }
+
     public function store()
     {
         /**

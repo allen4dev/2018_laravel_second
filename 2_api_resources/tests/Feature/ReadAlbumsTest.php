@@ -13,14 +13,22 @@ class ReadAlbumsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function an_authenticated_user_can_read_all_albums()
+    public function a_user_can_read_all_albums()
     {
-        $this->signin();
-
         $albums = create(Album::class, [], 2);
 
         $this->get('/api/albums')
             ->assertJson([ 'data' => $albums->toArray() ])
+            ->assertStatus(200);
+    }
+
+    /** @test */
+    public function a_user_can_read_a_single_album()
+    {
+        $album = create(Album::class);
+
+        $this->get($album->path())
+            ->assertJson([ 'data' => $album->toArray() ])
             ->assertStatus(200);
     }
 }
