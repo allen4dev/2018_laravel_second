@@ -12,4 +12,9 @@ class Album extends Model
     {
         return '/api/albums/' . $this->id;
     }
+
+    public function artist()
+    {
+        return $this->belongsTo(Artist::class);
+    }
 }

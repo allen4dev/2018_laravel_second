@@ -40,6 +40,12 @@ class AlbumController extends Controller
 
     public function update(Album $album)
     {
+        if (! auth()->user()->can('update', $album)) {
+            return response()->json([
+                'error' => 'You are not allowed to perform this action'
+            ], 403);
+        }
+
         $album->update([ 'title' => request('title') ]);
 
         return (new AlbumResource($album))
