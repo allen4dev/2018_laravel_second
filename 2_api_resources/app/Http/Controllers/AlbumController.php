@@ -55,6 +55,12 @@ class AlbumController extends Controller
 
     public function destroy(Album $album)
     {
+        if (! auth()->user()->can('delete', $album)) {
+            return response()->json([
+                'error' => 'You are not allowed to perform this action'
+            ], 403);
+        }
+
         $album->delete();
 
         return new AlbumResource($album);

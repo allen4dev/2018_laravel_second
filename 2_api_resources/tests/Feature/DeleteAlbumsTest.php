@@ -30,4 +30,21 @@ class DeleteAlbumsTest extends TestCase
             'artist_id' => $artist->id,
         ]);
     }
+
+    /** @test */
+    public function just_authorized_users_can_delete_albums()
+    {
+        $this->signin();
+
+        $album = create(Album::class);
+
+        $this->delete($album->path())
+            ->assertJson([ 'error' => 'You are not allowed to perform this action' ])
+            ->assertStatus(403);
+        
+        $this->assertDatabaseHas('albums', [
+            'title'     => $album->title,
+            'artist_id' => $album->artist_id,
+        ]);
+    }
 }
