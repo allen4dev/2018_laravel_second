@@ -37,4 +37,13 @@ class AlbumController extends Controller
                     ->response()
                     ->setStatusCode(201);
     }
+
+    public function update(Album $album)
+    {
+        $album->update([ 'title' => request('title') ]);
+
+        return (new AlbumResource($album))
+                    ->response()
+                    ->setStatusCode(202);
+    }
 }

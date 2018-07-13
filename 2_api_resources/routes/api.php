@@ -27,5 +27,6 @@ Route::delete('/songs/{song}', 'SongController@destroy');
 Route::get('/albums', 'AlbumController@index');
 Route::post('/albums', 'AlbumController@store');
 Route::get('/albums/{album}', 'AlbumController@show');
+Route::patch('/albums/{album}', 'AlbumController@update');
 
 Route::post('/users/{user}/upgrade', 'UpgradeUserController@index');
