@@ -20,7 +20,6 @@ class ReadAlbumsTest extends TestCase
         $albums = create(Album::class, [], 2);
 
         $this->get('/api/albums')
-
             ->assertJson([ 'data' => $albums->toArray() ])
             ->assertStatus(200);
     }
