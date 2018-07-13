@@ -60,6 +60,7 @@ class SongController extends Controller
                 'error' => 'You are not allowed to perform this action'
             ], 403);
         }
+        
         $song->delete();
 
         return new SongResource($song);
