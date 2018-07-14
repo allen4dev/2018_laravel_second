@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Song;
 use App\Artist;
+use App\Album;
 
 class SongTest extends TestCase
 {
@@ -27,5 +28,14 @@ class SongTest extends TestCase
         $song = create(Song::class);
 
         $this->assertInstanceOf(Artist::class, $song->artist);
+    }
+
+    /** @test */
+    public function a_song_belongs_to_an_album()
+    {
+        $album = create(Album::class);
+        $song = create(Song::class, [ 'album_id' => $album->id ]);
+
+        $this->assertInstanceOf(Album::class, $song->album);
     }
 }
