@@ -34,4 +34,15 @@ class ArtistTest extends TestCase
             $artist->albums
         );
     }
+
+    /** @test */
+    public function it_has_many_songs()
+    {
+        $artist = create(Artist::class);
+
+        $this->assertInstanceOf(
+            'Illuminate\Database\Eloquent\Collection',
+            $artist->songs
+        );
+    }
 }

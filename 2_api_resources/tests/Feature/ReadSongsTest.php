@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use App\Artist;
 use App\Song;
 
 class ReadSongsTest extends TestCase
@@ -31,4 +32,19 @@ class ReadSongsTest extends TestCase
             ->assertJson([ 'data' => $song->toArray() ])
             ->assertStatus(200);
     }
+
+    /** @test */
+    public function a_user_can_fetch_all_songs_of_an_artist()
+    {
+        $artist = create(Artist::class);
+
+        $songsCreatedByHim = create(Song::class, [ 'artist_id' => $artist->id ], 2);
+        $songCreatedByOtherArtist = create(Song::class);
+        
+        $this->get($artist->path() . '/songs')
+            ->assertJson([ 'data' => $songsCreatedByHim->toArray() ])
+            ->assertStatus(200);
+    }
+
+    /** @test */
 }

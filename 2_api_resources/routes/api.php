@@ -19,6 +19,7 @@ Route::patch('/artists/{artist}', 'ArtistController@update');
 Route::delete('/artists/{artist}', 'ArtistController@destroy');
 
 Route::get('/artists/{artist}/albums', 'ArtistAlbumController@index');
+Route::get('/artists/{artist}/songs', 'ArtistSongController@index');
 
 Route::get('/songs', 'SongController@index');
 Route::post('/songs', 'SongController@store');

@@ -10,6 +10,9 @@ use App\Artist;
 
 class ArtistAlbumController extends Controller
 {
+    /**
+     * ToDo: If is the only method move to AlbumController@index
+     */
     public function index(Artist $artist)
     {
         $albums = $artist->albums;

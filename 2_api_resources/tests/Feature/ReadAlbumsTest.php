@@ -34,11 +34,9 @@ class ReadAlbumsTest extends TestCase
     }
 
     /** @test */
-    public function an_artist_can_read_all_of_his_albums()
+    public function a_user_can_fetch_all_albums_of_an_artist()
     {
-        $this->signin();
-
-        $artist = create(Artist::class, [ 'user_id' => auth()->id() ]);
+        $artist = create(Artist::class);
 
         $albumsCreatedByHim = create(Album::class, [ 'artist_id' => $artist->id ], 2);
         $albumCreatedByOtherUser = create(Album::class);
