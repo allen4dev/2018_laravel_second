@@ -16,4 +16,17 @@ class PlaylistController extends Controller
 
         return new PlaylistResource($playlists);
     }
+
+    public function store()
+    {
+        $playlist = Playlist::create([
+            'title'       => request('title'),
+            'description' => request('description'),
+            'user_id'     => auth()->id(),
+        ]);
+
+        return (new PlaylistResource($playlist))
+                    ->response()
+                    ->setStatusCode(201);
+    }
 }
