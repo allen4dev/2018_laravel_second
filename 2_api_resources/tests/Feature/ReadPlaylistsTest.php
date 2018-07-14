@@ -21,4 +21,14 @@ class ReadPlaylistsTest extends TestCase
             ->assertJson([ 'data' => $playlists->toArray() ])
             ->assertStatus(200);
     }
+
+    /** @test */
+    public function a_user_can_read_a_single_playlist()
+    {
+        $playlist = create(Playlist::class);
+
+        $this->get($playlist->path())
+            ->assertJson([ 'data' => $playlist->toArray() ])
+            ->assertStatus(200);
+    }
 }

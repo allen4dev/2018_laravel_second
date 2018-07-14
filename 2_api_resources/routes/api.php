@@ -32,5 +32,6 @@ Route::delete('/albums/{album}', 'AlbumController@destroy');
 
 Route::get('/playlists', 'PlaylistController@index');
 Route::post('/playlists', 'PlaylistController@store');
+Route::get('/playlists/{playlist}', 'PlaylistController@show');
 
 Route::post('/users/{user}/upgrade', 'UpgradeUserController@index');

@@ -29,4 +29,9 @@ class PlaylistController extends Controller
                     ->response()
                     ->setStatusCode(201);
     }
+
+    public function show(Playlist $playlist)
+    {
+        return new PlaylistResource($playlist);
+    }
 }
