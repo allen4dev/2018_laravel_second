@@ -23,4 +23,15 @@ class ArtistTest extends TestCase
             "/api/artists/{$artist->id}"
         );
     }
+
+    /** @test */
+    public function it_has_many_albums()
+    {
+        $artist = create(Artist::class);
+
+        $this->assertInstanceOf(
+            'Illuminate\Database\Eloquent\Collection',
+            $artist->albums
+        );
+    }
 }

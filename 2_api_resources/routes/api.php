@@ -18,6 +18,8 @@ Route::get('/artists/{artist}', 'ArtistController@show');
 Route::patch('/artists/{artist}', 'ArtistController@update');
 Route::delete('/artists/{artist}', 'ArtistController@destroy');
 
+Route::get('/artists/{artist}/albums', 'ArtistAlbumController@index');
+
 Route::get('/songs', 'SongController@index');
 Route::post('/songs', 'SongController@store');
 Route::get('/songs/{song}', 'SongController@show');

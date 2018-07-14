@@ -14,6 +14,11 @@ class Artist extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function albums()
+    {
+        return $this->hasMany(Album::class);
+    }
+
     public function path()
     {
         return '/api/artists/' . $this->id;

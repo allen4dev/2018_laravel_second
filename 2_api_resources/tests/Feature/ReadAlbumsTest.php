@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Album;
+use App\Artist;
 
 class ReadAlbumsTest extends TestCase
 {
@@ -29,6 +30,21 @@ class ReadAlbumsTest extends TestCase
 
         $this->get($album->path())
             ->assertJson([ 'data' => $album->toArray() ])
+            ->assertStatus(200);
+    }
+
+    /** @test */
+    public function an_artist_can_read_all_of_his_albums()
+    {
+        $this->signin();
+
+        $artist = create(Artist::class, [ 'user_id' => auth()->id() ]);
+
+        $albumsCreatedByHim = create(Album::class, [ 'artist_id' => $artist->id ], 2);
+        $albumCreatedByOtherUser = create(Album::class);
+
+        $this->get($artist->path() . '/albums')
+            ->assertJson([ 'data' => $albumsCreatedByHim->toArray() ])
             ->assertStatus(200);
     }
 }
