@@ -31,4 +31,17 @@ class ReadPlaylistsTest extends TestCase
             ->assertJson([ 'data' => $playlist->toArray() ])
             ->assertStatus(200);
     }
+
+    /** @test */
+    public function a_user_can_fetch_his_playlists()
+    {
+        $this->signin();
+
+        $userPlaylists = create(Playlist::class, [ 'user_id' => auth()->id() ], 2);
+        $otherUserPlaylist = create(Playlist::class);
+
+        $this->get(auth()->user()->path() . '/playlists')
+            ->assertJson([ 'data' => $userPlaylists->toArray() ])
+            ->assertStatus(200);
+    }
 }

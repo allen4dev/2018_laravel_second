@@ -29,4 +29,15 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Artist::class, $user->fresh()->artist);
     }
+
+    /** @test */
+    public function a_user_has_many_playlists()
+    {
+        $user = create(User::class);
+
+        $this->assertInstanceOf(
+            'Illuminate\Database\Eloquent\Collection',
+            $user->playlists
+        );
+    }
 }

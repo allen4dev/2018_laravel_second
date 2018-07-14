@@ -40,3 +40,4 @@ Route::post('/playlists', 'PlaylistController@store');
 Route::get('/playlists/{playlist}', 'PlaylistController@show');
 
 Route::post('/users/{user}/upgrade', 'UpgradeUserController@index');
+Route::get('/users/{user}/playlists', 'UserPlaylistController@index');

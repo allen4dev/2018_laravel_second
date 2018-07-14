@@ -35,6 +35,10 @@ class User extends Authenticatable
         return $this->hasOne(Artist::class);
         // return $this->belongsTo(Artist::class);
     }
+    public function playlists()
+    {
+        return $this->hasMany(Playlist::class);
+    }
 
     public function upgrade()
     {
