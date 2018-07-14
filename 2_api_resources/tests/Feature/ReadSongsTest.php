@@ -6,7 +6,9 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use App\Album;
 use App\Artist;
+use App\Playlist;
 use App\Song;
 
 class ReadSongsTest extends TestCase
@@ -47,4 +49,30 @@ class ReadSongsTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_fetch_all_songs_of_an_album()
+    {
+        $album = create(Album::class);
+
+        $albumSongs = create(Song::class, [ 'album_id' => $album->id ], 2);
+        $songForOtherAlbum = create(Song::class);
+
+        $this->get($album->path() . '/songs')
+            ->assertJson([ 'data' => $albumSongs->toArray() ])
+            ->assertStatus(200);
+    }
+
+    /** 
+     * ToDo: a_user_can_fetch_all_songs_of_a_playlist
+    */
+    // public function a_user_can_fetch_all_songs_of_a_playlist()
+    // {
+        // Given we have a playlist
+
+        // two songs for that playlist and a song for other playlist
+
+        // When a user makes a GET request to the $playlist->path/songs
+
+        // Then he should receive a JSON with the playlist songs
+        // and a 200 OK status code
+    // }
 }

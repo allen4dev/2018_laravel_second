@@ -33,6 +33,8 @@ Route::get('/albums/{album}', 'AlbumController@show');
 Route::patch('/albums/{album}', 'AlbumController@update');
 Route::delete('/albums/{album}', 'AlbumController@destroy');
 
+Route::get('/albums/{album}/songs', 'AlbumSongController@index');
+
 Route::get('/playlists', 'PlaylistController@index');
 Route::post('/playlists', 'PlaylistController@store');
 Route::get('/playlists/{playlist}', 'PlaylistController@show');

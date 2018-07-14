@@ -19,7 +19,7 @@ class CreateSongsTest extends TestCase
         $artist = create(Artist::class);
 
         $song = raw(Song::class, [ 'artist_id' => $artist->id ]);
-
+        
         $this->post('/api/songs', $song)
             ->assertJson([ 'data' => Song::first()->toArray() ])
             ->assertStatus(201);

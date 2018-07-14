@@ -12,7 +12,7 @@ use App\Artist;
 class AlbumTest extends TestCase
 {
     /** @test */
-    public function an_album_knows_his_path()
+    public function it_knows_his_path()
     {
         $album = create(Album::class);
 
@@ -20,10 +20,20 @@ class AlbumTest extends TestCase
     }
 
     /** @test */
-    public function an_album_belongs_to_an_artist()
+    public function it_belongs_to_an_artist()
     {
         $album = create(Album::class);
 
         $this->assertInstanceOf(Artist::class, $album->artist);
+    }
+
+    public function it_has_many_songs()
+    {
+        $album = create(Album::class);
+
+        $this->assertInstanceOf(
+            'Illuminate\Database\Eloquent\Collection',
+            $album->songs
+        );
     }
 }

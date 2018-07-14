@@ -11,5 +11,6 @@ $factory->define(App\Song::class, function (Faker $faker) {
         'artist_id' => function () {
             return create(App\Artist::class)->id;
         },
+        'album_id'  => null,
     ];
 });

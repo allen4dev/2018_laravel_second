@@ -26,7 +26,7 @@ class SongController extends Controller
          * ToDo: validate request
          */
         $song = Song::create(
-            request()->only([ 'artist_id', 'genre_id', 'name' ])
+            request()->only([ 'artist_id', 'genre_id', 'name', 'album_id' ])
         );
 
         return (new SongResource($song))
