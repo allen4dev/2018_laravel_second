@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Album;
 use App\Artist;
 use App\Song;
+use App\Playlist;
 
 class RemoveSongFromListTest extends TestCase
 {
@@ -34,5 +35,26 @@ class RemoveSongFromListTest extends TestCase
             ->assertStatus(200);
 
         $this->assertNull($song->fresh()->album_id);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_remove_a_song_from_his_playlist()
+    {
+        $this->signin();
+
+        $playlist = create(Playlist::class, [ 'user_id' => auth()->id() ]);
+        
+        $song = create(Song::class);
+        $this->post($playlist->path() . '/add-song/' . $song->id);
+
+        $this->delete($playlist->path() . '/remove-song/' . $song->id)
+            ->assertJson([ 'data' => $song->toArray() ])
+            ->assertStatus(200);
+
+        $this->assertDatabaseMissing('playlist_song', [
+            'playlist_id' => $playlist->id,
+            'song_id' => $song->id,
+            'user_id' => auth()->id(),
+        ]);
     }
 }

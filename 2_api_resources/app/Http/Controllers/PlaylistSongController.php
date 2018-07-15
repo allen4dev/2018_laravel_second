@@ -21,4 +21,11 @@ class PlaylistSongController extends Controller
                     ->response()
                     ->setStatusCode(201);
     }
+
+    public function destroy(Playlist $playlist, Song $song)
+    {
+        $playlist->songs()->detach($song);
+
+        return new SongResource($song);
+    }
 }
