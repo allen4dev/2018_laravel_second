@@ -43,4 +43,11 @@ class PlaylistController extends Controller
                     ->response()
                     ->setStatusCode(202);
     }
+
+    public function destroy(Playlist $playlist)
+    {
+        $playlist->delete();
+
+        return new PlaylistResource($playlist);
+    }
 }
