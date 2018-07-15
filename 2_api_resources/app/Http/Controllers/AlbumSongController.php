@@ -23,4 +23,11 @@ class AlbumSongController extends Controller
 
         return new SongResource($song);
     }
+
+    public function destroy(Album $album, Song $song)
+    {
+        $song->update([ 'album_id' => null ]);
+
+        return new SongResource($song->fresh());
+    }
 }

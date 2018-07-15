@@ -35,6 +35,7 @@ Route::delete('/albums/{album}', 'AlbumController@destroy');
 
 Route::get('/albums/{album}/songs', 'AlbumSongController@index');
 Route::patch('/albums/{album}/add-song/{song}', 'AlbumSongController@update');
+Route::delete('/albums/{album}/remove-song/{song}', 'AlbumSongController@destroy');
 
 Route::get('/playlists', 'PlaylistController@index');
 Route::post('/playlists', 'PlaylistController@store');
