@@ -34,4 +34,13 @@ class PlaylistController extends Controller
     {
         return new PlaylistResource($playlist);
     }
+
+    public function update(Playlist $playlist)
+    {
+        $playlist->update(request()->only('title', 'description'));
+
+        return (new PlaylistResource($playlist))
+                    ->response()
+                    ->setStatusCode(202);
+    }
 }
