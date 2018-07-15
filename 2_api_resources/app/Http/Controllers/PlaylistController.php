@@ -46,6 +46,8 @@ class PlaylistController extends Controller
 
     public function destroy(Playlist $playlist)
     {
+        $playlist->songs()->sync([]);
+
         $playlist->delete();
 
         return new PlaylistResource($playlist);
