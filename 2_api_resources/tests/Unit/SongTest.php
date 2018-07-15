@@ -15,7 +15,7 @@ class SongTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_song_knows_his_path()
+    public function it_knows_his_path()
     {
         $song = create(Song::class);
 
@@ -23,7 +23,7 @@ class SongTest extends TestCase
     }
 
     /** @test */
-    public function a_song_belongs_to_an_artist()
+    public function it_belongs_to_an_artist()
     {
         $song = create(Song::class);
 
@@ -31,11 +31,22 @@ class SongTest extends TestCase
     }
 
     /** @test */
-    public function a_song_belongs_to_an_album()
+    public function it_belongs_to_an_album()
     {
         $album = create(Album::class);
         $song = create(Song::class, [ 'album_id' => $album->id ]);
 
         $this->assertInstanceOf(Album::class, $song->album);
+    }
+
+    /** @test */
+    public function it_belongs_to_many_playlists()
+    {
+        $song = create(Song::class);
+
+        $this->assertInstanceOf(
+            'Illuminate\Database\Eloquent\Collection',
+            $song->playlists
+        );
     }
 }

@@ -12,4 +12,9 @@ class Playlist extends Model
     {
         return '/api/playlists/' . $this->id;
     }
+
+    public function songs()
+    {
+        return $this->belongsToMany(Song::class);
+    }
 }
