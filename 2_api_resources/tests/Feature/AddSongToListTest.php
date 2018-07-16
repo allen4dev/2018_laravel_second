@@ -50,4 +50,36 @@ class AddSongToListTest extends TestCase
             'song_id'     => $song->id,
         ]);
     }
+
+    /** @test */
+    public function a_user_can_add_multiple_songs_to_his_playlist()
+    {
+        // Given we have an authenticated user
+        $this->signin();
+        // a playlist created by him and two songs
+        $playlist = create(Playlist::class, [ 'user_id' => auth()->id() ]);
+        $songs = create(Song::class, [], 2);
+
+        // when he send and array with the ids of both songs
+        $this->post($playlist->path() . '/add-song', [
+            'songs' => $songs->pluck('id')->toArray()
+        ])
+        // the he should receive a JSON with the  added songs
+            ->assertJson([ 'data' => $songs->toArray() ])
+        // a 201 create status code
+            ->assertStatus(201);
+
+        // and the records should exists in the playlist_song table
+        $this->assertDatabaseHas('playlist_song', [
+            'user_id'     => auth()->id(),
+            'playlist_id' => $playlist->id,
+            'song_id'     => $songs->first()->id,
+        ]);
+
+        $this->assertDatabaseHas('playlist_song', [
+            'user_id'     => auth()->id(),
+            'playlist_id' => $playlist->id,
+            'song_id'     => $songs->find(2)->id,
+        ]);
+    }
 }

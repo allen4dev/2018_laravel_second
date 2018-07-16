@@ -11,13 +11,22 @@ use App\Song;
 
 class PlaylistSongController extends Controller
 {
-    public function store(Playlist $playlist, Song $song)
-    {
-        $playlist
-            ->songs()
-            ->attach($song, [ 'user_id' => auth()->id() ]);
+    // public function store(Playlist $playlist, Song $song)
+    // {
+    //     $playlist
+    //         ->songs()
+    //         ->attach($song, [ 'user_id' => auth()->id() ]);
         
-        return (new SongResource($song))
+    //     return (new SongResource($song))
+    //                 ->response()
+    //                 ->setStatusCode(201);
+    // }
+
+    public function store(Playlist $playlist)
+    {
+        $playlist->songs()->attach(request('songs'), ['user_id' => auth()->id()]);
+
+        return (new SongResource($playlist->songs))
                     ->response()
                     ->setStatusCode(201);
     }
