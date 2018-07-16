@@ -43,6 +43,7 @@ Route::get('/playlists/{playlist}', 'PlaylistController@show');
 Route::patch('/playlists/{playlist}', 'PlaylistController@update');
 Route::delete('/playlists/{playlist}', 'PlaylistController@destroy');
 
+Route::get('/playlists/{playlist}/songs', 'PlaylistSongController@index');
 Route::post('/playlists/{playlist}/add-song', 'PlaylistSongController@store');
 Route::delete('/playlists/{playlist}/remove-song/{song}', 'PlaylistSongController@destroy');
 

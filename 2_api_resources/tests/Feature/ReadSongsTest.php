@@ -61,18 +61,22 @@ class ReadSongsTest extends TestCase
             ->assertStatus(200);
     }
 
-    /** 
-     * ToDo: a_user_can_fetch_all_songs_of_a_playlist
-    */
-    // public function a_user_can_fetch_all_songs_of_a_playlist()
-    // {
-        // Given we have a playlist
+    /** @test */
+    public function a_user_can_fetch_all_songs_of_a_playlist()
+    {
+        $this->signin();
 
-        // two songs for that playlist and a song for other playlist
+        $playlist = create(Playlist::class, [ 'user_id' => auth()->id() ]);
 
-        // When a user makes a GET request to the $playlist->path/songs
+        $playlistSongs = create(Song::class, [], 2);
+        $otherSong = create(Song::class);
 
-        // Then he should receive a JSON with the playlist songs
-        // and a 200 OK status code
-    // }
+        $this->post($playlist->path() . '/add-song', [
+            'songs' => $playlistSongs->pluck('id')->toArray()
+        ]);
+
+        $this->get($playlist->path() . '/songs')
+            ->assertJson([ 'data' => $playlistSongs->toArray() ])
+            ->assertStatus(200);
+    }
 }
