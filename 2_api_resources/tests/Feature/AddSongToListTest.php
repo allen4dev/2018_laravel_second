@@ -40,8 +40,8 @@ class AddSongToListTest extends TestCase
         $playlist = create(Playlist::class, [ 'user_id' => auth()->id() ]);
         $song = create(Song::class);
 
-        $this->post($playlist->path() . '/add-song/' . $song->id)
-            ->assertJson([ 'data' => $song->toArray() ])
+        $this->post($playlist->path() . '/add-song', ['songs' => [ $song->id ]])
+            ->assertJson([ 'data' => [ $song->toArray() ]])
             ->assertStatus(201);
 
         $this->assertDatabaseHas('playlist_song', [
@@ -52,34 +52,25 @@ class AddSongToListTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_add_multiple_songs_to_his_playlist()
+    public function an_authenticated_can_add_multiple_songs_to_his_playlist()
     {
-        // Given we have an authenticated user
         $this->signin();
-        // a playlist created by him and two songs
+
         $playlist = create(Playlist::class, [ 'user_id' => auth()->id() ]);
         $songs = create(Song::class, [], 2);
 
-        // when he send and array with the ids of both songs
         $this->post($playlist->path() . '/add-song', [
             'songs' => $songs->pluck('id')->toArray()
         ])
-        // the he should receive a JSON with the  added songs
             ->assertJson([ 'data' => $songs->toArray() ])
-        // a 201 create status code
             ->assertStatus(201);
 
-        // and the records should exists in the playlist_song table
-        $this->assertDatabaseHas('playlist_song', [
-            'user_id'     => auth()->id(),
-            'playlist_id' => $playlist->id,
-            'song_id'     => $songs->first()->id,
-        ]);
-
-        $this->assertDatabaseHas('playlist_song', [
-            'user_id'     => auth()->id(),
-            'playlist_id' => $playlist->id,
-            'song_id'     => $songs->find(2)->id,
-        ]);
+        $songs->each(function ($song) use ($playlist) {
+            $this->assertDatabaseHas('playlist_song', [
+                'user_id'     => auth()->id(),
+                'playlist_id' => $playlist->id,
+                'song_id'     => $song->id,
+            ]);
+        });
     }
 }

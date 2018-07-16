@@ -18,6 +18,7 @@ class PlaylistSong extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('playlist_id');
             $table->unsignedInteger('song_id');
+            $table->unique(['user_id', 'playlist_id', 'song_id']);
             $table->timestamps();
         });
     }

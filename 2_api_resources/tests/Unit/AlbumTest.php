@@ -11,6 +11,8 @@ use App\Artist;
 
 class AlbumTest extends TestCase
 {
+    use RefreshDatabase;
+    
     /** @test */
     public function it_knows_his_path()
     {

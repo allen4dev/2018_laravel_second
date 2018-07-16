@@ -10,6 +10,8 @@ use App\Playlist;
 
 class UpdatePlaylistsTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function an_authenticated_user_can_update_his_playlist_information()
     {
