@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\User;
 use App\Artist;
+use App\Song;
 
 class ReadArtistsTest extends TestCase
 {
@@ -57,5 +58,21 @@ class ReadArtistsTest extends TestCase
             ->assertJson([ 'meta' => [
                 'status' => 200,
             ]]);
+    }
+
+    /** @test */
+    public function an_artist_response_should_contain_the_ids_of_the_songs_related_to_him()
+    {
+        $artist = create(Artist::class);
+        $songs = create(Song::class, [ 'artist_id' => $artist->id ], 2);
+
+        $this->get($artist->path())
+            ->assertJson([
+                'data' => [
+                    'firstname' => $artist->firstname,
+                    'lastname'  => $artist->lastname,
+                    'songs'     => $songs->pluck('id')->toArray(),
+                ]
+            ]);
     }
 }
