@@ -17,6 +17,10 @@ class Artist extends JsonResource
         $songs = $request->has('withSongs')
             ? $songs = Song::collection($this->whenLoaded('songs'))
             : $this->songs->pluck('id');
+        
+        $albums = $request->has('withAlbums')
+            ? $albums = Album::collection($this->whenLoaded('albums'))
+            : $this->albums->pluck('id');
 
         return [
             'id'          => $this->id,
@@ -30,7 +34,7 @@ class Artist extends JsonResource
             'created_at'  => (string) $this->created_at,
             'updated_at'  => (string) $this->updated_at,
             'songs'       => $songs,
-            'albums'      => $this->albums->pluck('id'),
+            'albums'      => $albums,
         ];
     }
 }

@@ -107,4 +107,19 @@ class ReadArtistsTest extends TestCase
                 ]
             ]);
     }
+
+     /** @test */
+     public function an_artist_response_should_contain_detailed_info_about_the_albums_created_by_him()
+     {
+         $artist = create(Artist::class);
+ 
+         $albums = create(Album::class, [ 'artist_id' => $artist->id ], 2);
+ 
+         $this->get($artist->path() . '?withAlbums')
+             ->assertJson([
+                 'data' => [
+                     'albums' => $albums->toArray(),
+                 ]
+             ]);
+     }
 }
