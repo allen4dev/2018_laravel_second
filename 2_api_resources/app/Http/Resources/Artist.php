@@ -14,8 +14,12 @@ class Artist extends JsonResource
      */
     public function toArray($request)
     {
+        $songs = $request->has('withSongs')
+            ? $songs = Song::collection($this->whenLoaded('songs'))
+            : $this->songs->pluck('id');
+
         return [
-            'id'     => $this->id,
+            'id'          => $this->id,
             'user_id'     => $this->user_id,
             'firstname'   => $this->firstname,
             'lastname'    => $this->lastname,
@@ -25,7 +29,7 @@ class Artist extends JsonResource
             'description' => $this->description,
             'created_at'  => (string) $this->created_at,
             'updated_at'  => (string) $this->updated_at,
-            'songs'       => $this->songs->pluck('id'),
+            'songs'       => $songs,
         ];
     }
 }

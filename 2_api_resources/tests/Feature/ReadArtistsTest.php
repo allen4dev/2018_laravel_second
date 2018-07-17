@@ -75,4 +75,20 @@ class ReadArtistsTest extends TestCase
                 ]
             ]);
     }
+
+    /** @test */
+    public function an_artist_response_should_contain_detailed_info_about_the_songs_if_withSongs_was_passed_on_the_request()
+    {
+        $artist = create(Artist::class);
+        $songs = create(Song::class, [ 'artist_id' => $artist->id ], 2);
+        
+        $this->get($artist->path() . '?withSongs')
+            ->assertJson([
+                'data' => [
+                    'firstname' => $artist->firstname,
+                    'lastname'  => $artist->lastname,
+                    'songs'     => $songs->toArray(),
+                ]
+            ]);
+    }
 }

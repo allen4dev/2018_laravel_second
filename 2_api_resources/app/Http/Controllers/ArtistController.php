@@ -22,6 +22,10 @@ class ArtistController extends Controller
 
     public function show(Artist $artist)
     {
+        if (request()->has('withSongs')) {
+            $artist->load('songs');
+        }
+
         return new ArtistResource($artist);
     }
 
