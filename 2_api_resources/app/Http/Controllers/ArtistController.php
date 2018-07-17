@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\Artist as ArtistResource;
+use App\Http\Resources\ArtistCollection;
 
 use App\Artist;
 
@@ -16,7 +17,7 @@ class ArtistController extends Controller
 
         $artists = Artist::latest()->paginate($offset);
 
-        return new ArtistResource($artists);
+        return new ArtistCollection($artists);
     }
 
     public function show(Artist $artist)

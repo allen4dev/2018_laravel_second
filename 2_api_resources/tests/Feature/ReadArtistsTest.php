@@ -41,8 +41,21 @@ class ReadArtistsTest extends TestCase
         $this->get('/api/artists?offset=1')
             ->assertJson([
                 'data' => [ $artists->first()->toArray() ],
-                'current_page' => 1,
-                'total' => 2
+                'meta' => [
+                    'current_page' => 1,
+                    'total' => 2
+                ]
             ]);
+    }
+
+    /** @test */
+    public function response_should_contain_meta_information()
+    {
+        $artists = create(Artist::class, [], 2);
+
+        $this->get('/api/artists')
+            ->assertJson([ 'meta' => [
+                'status' => 200,
+            ]]);
     }
 }
