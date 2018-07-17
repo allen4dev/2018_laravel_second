@@ -32,4 +32,17 @@ class ReadArtistsTest extends TestCase
             ->assertJson([ 'data' => $artist->toArray() ])
             ->assertStatus(200);
     }
+
+    /** @test */
+    public function a_user_receive_the_number_of_results_he_wants()
+    {
+        $artists = create(Artist::class, [], 2);
+
+        $this->get('/api/artists?offset=1')
+            ->assertJson([
+                'data' => [ $artists->first()->toArray() ],
+                'current_page' => 1,
+                'total' => 2
+            ]);
+    }
 }

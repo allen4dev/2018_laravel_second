@@ -10,9 +10,11 @@ use App\Artist;
 
 class ArtistController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $artists = Artist::all();
+        $offset = $request->offset ?: 5;
+
+        $artists = Artist::latest()->paginate($offset);
 
         return new ArtistResource($artists);
     }
