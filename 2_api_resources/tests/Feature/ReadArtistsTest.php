@@ -6,8 +6,9 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\User;
+use App\Album;
 use App\Artist;
+use App\User;
 use App\Song;
 
 class ReadArtistsTest extends TestCase
@@ -88,6 +89,21 @@ class ReadArtistsTest extends TestCase
                     'firstname' => $artist->firstname,
                     'lastname'  => $artist->lastname,
                     'songs'     => $songs->toArray(),
+                ]
+            ]);
+    }
+
+    /** @test */
+    public function an_artist_response_should_contain_the_ids_of_the_albums_created_by_him()
+    {
+        $artist = create(Artist::class);
+
+        $albums = create(Album::class, [ 'artist_id' => $artist->id ], 2);
+
+        $this->get($artist->path())
+            ->assertJson([
+                'data' => [
+                    'albums' => $albums->pluck('id')->toArray(),
                 ]
             ]);
     }
